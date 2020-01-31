@@ -1,0 +1,4 @@
+See file:///D:/Wave2826/InfiniteRecharge/InfiniteRecharge/build/tmp/linkFrcUserProgramReleaseExecutable/output.txt for all output for linkFrcUserProgramReleaseExecutable.
+linking frcUserProgram successful.
+
+Finished linkFrcUserProgramReleaseExecutable, see full log file:///D:/Wave2826/InfiniteRecharge/InfiniteRecharge/build/tmp/linkFrcUserProgramReleaseExecutable/output.txt.
