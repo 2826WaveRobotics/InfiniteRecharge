@@ -18,6 +18,8 @@ public:
     void setPipeline(int num);
     int getPipeline();
     void activateVisionProcessing(bool vision);
+    double getTarget();
+    double getDistance(int cameraAngle, double cameraHeight, double targetHeight);
 
     bool validTarget;
     double horizontalOffset;
