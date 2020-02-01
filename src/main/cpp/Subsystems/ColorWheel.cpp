@@ -16,7 +16,7 @@ using namespace rev;
 
 ColorWheel::ColorWheel() : frc::Subsystem("ColorWheel") {
 
-    colorMotor.reset(new WPI_TalonSRX(COLOR_WHEEL));
+    colorMotor.reset(new WPI_TalonSRX(1));
 
     //Need to register all of the colors
    m_colorMatcher.AddColorMatch(kBlueTarget);
@@ -43,39 +43,55 @@ ColorWheel::ColorWheel() : frc::Subsystem("ColorWheel") {
 
 void ColorWheel::printClosestColor()
 {
-    frc::Color sensedColor = m_colorSensor.GetColor();
-    std::cout << "Red: " << sensedColor.red << ", Blue: " << sensedColor.blue << ", Green: " << sensedColor.green << std::endl;
+    std::cout << "Color: ";
 
+    frc::Color SensedColor = m_colorSensor.GetColor();
+    //comment this out or in to see values.
+    //std::cout << "red: " << SensedColor.red << ", Blue: " << SensedColor.blue << ", Green: " << SensedColor.green << std::endl;
 
-    bool foundColor = false;
-    double confidenceFactor = 0.75;
-    if(kBlueTarget == m_colorMatcher.MatchColor(kBlueTarget, confidenceFactor))
-    {
-        std::cout << "Found Blue";
-        foundColor = true;
+    if (SensedColor.red > SensedColor.green && SensedColor.blue < SensedColor.red  && SensedColor.green > SensedColor.blue) {
+        std::cout << "Red ";
     }
-    if(kGreenTarget == m_colorMatcher.MatchColor(kGreenTarget, confidenceFactor))
-    {
-        std::cout << "Found Green";
-        foundColor = true;
+    if (SensedColor.blue > SensedColor.green) {
+        std::cout << "Blue ";
     }
-    if(kYellowTarget == m_colorMatcher.MatchColor(kYellowTarget, confidenceFactor))
-    {
-        std::cout << "Found Yellow";
-        foundColor = true;
+        
+    if (SensedColor.green > SensedColor.blue && SensedColor.blue > SensedColor.red) {
+        std::cout << "Green ";
     }
-    if(kRedTarget == m_colorMatcher.MatchColor(kRedTarget, confidenceFactor))
-    {
-        std::cout << "Found Red";
-        foundColor = true;
+    if (SensedColor.green > SensedColor.blue && SensedColor.blue < SensedColor.red && SensedColor.red < SensedColor.green ) {
+        std::cout << "Yellow ";
     }
 
-    if(!foundColor)
-    {
-        std::cout << "Did Not Match Color";
-    }
+    // bool foundColor = false;
+    // double confidenceFactor = 0.95;
+    // if(kBlueTarget == m_colorMatcher.MatchColor(kBlueTarget, confidenceFactor))
+    // {
+    //     std::cout << "Found Blue";
+    //     foundColor = true;
+    // }
+    // if(kGreenTarget == m_colorMatcher.MatchColor(kGreenTarget, confidenceFactor))
+    // {
+    //     std::cout << "Found Green";
+    //     foundColor = true;
+    // }
+    // if(kYellowTarget == m_colorMatcher.MatchColor(kYellowTarget, confidenceFactor))
+    // {
+    //     std::cout << "Found Yellow";
+    //     foundColor = true;
+    // }
+    // if(kRedTarget == m_colorMatcher.MatchColor(kRedTarget, confidenceFactor))
+    // {
+    //     std::cout << "Found Red";
+    //     foundColor = true;
+    // }
 
-    std::cout << std::endl;
+    // if(!foundColor)
+    // {
+    //     std::cout << "Did Not Match Color";
+    // }
+
+    // std::cout << std::endl;
 }
 
 
