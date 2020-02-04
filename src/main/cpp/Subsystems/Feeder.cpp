@@ -11,31 +11,24 @@
 
 #include "Subsystems/Feeder.h"
 #include "Reference.h"
+using namespace rev;
+
+Feeder::Feeder() {
+
+    hopperLeft = new CANSparkMax(HOPPER_LEFT, CANSparkMaxLowLevel::MotorType::kBrushless);
+    hopperRight = new CANSparkMax(HOPPER_RIGHT, CANSparkMaxLowLevel::MotorType::kBrushless);
+    intake = new CANSparkMax(INTAKE, CANSparkMaxLowLevel::MotorType::kBrushless);
 
 
-Feeder::Feeder() : frc::Subsystem("Feeder") {
 
-    feederMotor.reset(new WPI_TalonSRX(FEEDER));
-
-
-    pDBoard.reset(new frc::PowerDistributionPanel(0));
+    pDBoard = new frc::PowerDistributionPanel(0);
     //AddChild("PDBoard", pDBoard);
 
-    photoEye.reset(new frc::DigitalInput(6));
+    photoEye = new frc::DigitalInput(6);
     //AddChild("PhotoEye", photoEye);
 
 }
 
-void Feeder::InitDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // SetDefaultCommand(new MySpecialCommand());
-
-}
-
-void Feeder::Periodic() {
-    // Put code here to be run every loop
-
-}
 
 
 // Put methods for controlling this subsystem

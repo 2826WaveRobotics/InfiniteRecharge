@@ -11,26 +11,22 @@
 
 
 #include "Subsystems/ShooterPID.h"
-#include "frc/SmartDashboard/SmartDashboard.h"
-#include "frc/LiveWindow/LiveWindow.h"
 #include "Reference.h"
 
-ShooterPID::ShooterPID() : PIDSubsystem("ShooterPID", 1.0, 0.0, 0.0) {
-    SetAbsoluteTolerance(0.2);
-    GetPIDController()->SetContinuous(false);
-    //GetPIDController()->SetName("ShooterPID", "PIDSubsystem Controller");
-    AddChild(GetPIDController());
+using namespace rev;
 
-    shooter1.reset(new WPI_TalonSRX(SHOOTER_1));
-    shooter2.reset(new WPI_TalonSRX(SHOOTER_2));
-    shooterGroup = std::make_shared<frc::SpeedControllerGroup>(*shooter1, *shooter2  );
-    //AddChild("ShooterGroup", shooterGroup);
-
-    junkShooterEncoder.reset(new frc::Encoder(2, 3, false, frc::Encoder::k4X));
-    //AddChild("JunkShooterEncoder", junkShooterEncoder);
-    junkShooterEncoder->SetDistancePerPulse(1.0);
-    junkShooterEncoder->SetPIDSourceType(frc::PIDSourceType::kRate);
-
+ShooterPID::ShooterPID() : PIDSubsystem(frc2::PIDController( 1.0, 0.0, 0.0)),
+    pidController(GetController())
+ {
+    pidController.DisableContinuousInput();
+    pidController.SetTolerance(0.2);
+    
+    shooter1 = new WPI_TalonFX(SHOOTER_1);
+    shooter2 = new WPI_TalonFX(SHOOTER_2);
+    shooterGroup = new frc::SpeedControllerGroup(*shooter1, *shooter2);
+    tower1 = new CANSparkMax(TOWER_1, CANSparkMaxLowLevel::MotorType::kBrushless);
+    tower2 = new CANSparkMax(TOWER_2, CANSparkMaxLowLevel::MotorType::kBrushless);
+    towerGroup = new frc::SpeedControllerGroup(*tower1, *tower2);
         // Use these to get going:
         // SetSetpoint() -  Sets where the PID controller should move the system
         //                  to
@@ -38,19 +34,16 @@ ShooterPID::ShooterPID() : PIDSubsystem("ShooterPID", 1.0, 0.0, 0.0) {
 
 }
 
-double ShooterPID::ReturnPIDInput() {
+double ShooterPID::GetMeasurement() {
     // Return your input value for the PID loop
     // e.g. a sensor, like a potentiometer:
     // yourPot->SetAverageVoltage() / kYourMaxVoltage;
 
-    //shooter1.get()->GetSensorCollection().GetAnalogInRaw();  //Need to get raw speed. Will probably have to reference the CTRE software
+    return shooter1->GetSensorCollection().GetIntegratedSensorVelocity();  //Need to get raw speed. Will probably have to reference the CTRE software
 
-//In this function, read the velocity from the Spark Max and return it's value because it arrives in RPM
-
-    return junkShooterEncoder->PIDGet();
 }
 
-void ShooterPID::UsePIDOutput(double output) {
+void ShooterPID::UseOutput(double output, double setpoint) {
     // Use output to drive your system, like a motor
     // e.g. yourMotor->Set(output);
 
@@ -60,9 +53,9 @@ void ShooterPID::UsePIDOutput(double output) {
     shooterGroup->PIDWrite(output);
 }
 
-void ShooterPID::InitDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // SetDefaultCommand(new MySpecialCommand());
+void ShooterPID::SetShooterSpeed(double rpm)
+{
+    SetSetpoint(rpm);
 }
 
 

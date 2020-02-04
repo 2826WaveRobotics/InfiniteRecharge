@@ -11,47 +11,45 @@
 
 
 #include "Subsystems/DrivePID.h"
-#include "frc/SmartDashboard/SmartDashboard.h"
-#include "frc/LiveWindow/LiveWindow.h"
 #include "Reference.h"
 
-DrivePID::DrivePID() : PIDSubsystem("DrivePID", 1.0, 0.0, 0.0) {
-    SetAbsoluteTolerance(0.2);
-    GetPIDController()->SetContinuous(false);
-    //GetPIDController()->SetName("DrivePID", "PIDSubsystem Controller");
-    //AddChild(GetPIDController());
+using namespace rev;
 
-    left1.reset(new WPI_TalonSRX(DRIVE_LEFT_1));
-    left2.reset(new WPI_TalonSRX(DRIVE_LEFT_2));
-    leftSide = std::make_shared<frc::SpeedControllerGroup>(*left1, *left2  );
-    // AddChild("LeftSide", leftSide);
+DrivePID::DrivePID() : PIDSubsystem(frc2::PIDController( 1.0, 0.0, 0.0)),
+    pidController(GetController())
+ {
+    pidController.DisableContinuousInput();
+    pidController.SetTolerance(0.2);
 
-    right1.reset(new WPI_TalonSRX(DRIVE_RIGHT_1));
-    right2.reset(new WPI_TalonSRX(DRIVE_RIGHT_2));
-    rightSide = std::make_shared<frc::SpeedControllerGroup>(*right1, *right2  );
-    // AddChild("RightSide", rightSide);
+    left1 = new CANSparkMax(DRIVE_LEFT_1, CANSparkMaxLowLevel::MotorType::kBrushless);
+    left2 = new CANSparkMax(DRIVE_LEFT_2, CANSparkMaxLowLevel::MotorType::kBrushless);
+    left3 = new CANSparkMax(DRIVE_LEFT_3, CANSparkMaxLowLevel::MotorType::kBrushless);
+    leftSide = new frc::SpeedControllerGroup(*left1, *left2, *left3);
 
-    driveEncoder.reset(new frc::Encoder(4, 5, false, frc::Encoder::k4X));
-    // AddChild("DriveEncoder", driveEncoder);
-    driveEncoder->SetDistancePerPulse(1.0);
-    driveEncoder->SetPIDSourceType(frc::PIDSourceType::kRate);
+    right1 = new CANSparkMax(DRIVE_RIGHT_1, CANSparkMaxLowLevel::MotorType::kBrushless);
+    right2 = new CANSparkMax(DRIVE_RIGHT_2, CANSparkMaxLowLevel::MotorType::kBrushless);
+    right3 = new CANSparkMax(DRIVE_RIGHT_3, CANSparkMaxLowLevel::MotorType::kBrushless);
+    rightSide = new frc::SpeedControllerGroup(*right1, *right2, *right3);
 
+    //The conversion factor will be a combo of the gear ratio and wheel circumference.
+    // This will be multiplied by the number of motor rotations so that calling GetPosition()
+    // returns a distance rather than a raw number of turns.  
+    left1->GetEncoder().SetPositionConversionFactor(0.25);
+ 
         // Use these to get going:
         // SetSetpoint() -  Sets where the PID controller should move the system
         //                  to
         // Enable() - Enables the PID controller.
 }
 
-double DrivePID::ReturnPIDInput() {
+double DrivePID::GetMeasurement() {
     // Return your input value for the PID loop
-    // e.g. a sensor, like a potentiometer:
-    // yourPot->SetAverageVoltage() / kYourMaxVoltage;
 
-    return driveEncoder->PIDGet();
+    return left1->GetEncoder().GetPosition();
 
 }
 
-void DrivePID::UsePIDOutput(double output) {
+void DrivePID::UseOutput(double output, double setpoint) {
     // Use output to drive your system, like a motor
     // e.g. yourMotor->Set(output);
 
@@ -59,11 +57,6 @@ leftSide->PIDWrite(output);
 
 }
 
-void DrivePID::InitDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // SetDefaultCommand(new MySpecialCommand());
-
-}
 
 
 
