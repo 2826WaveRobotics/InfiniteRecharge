@@ -15,3 +15,4 @@
 #define HOPPER_LEFT     62
 #define HOPPER_RIGHT    61
 #define INTAKE          44
+#define CLIMB           69
