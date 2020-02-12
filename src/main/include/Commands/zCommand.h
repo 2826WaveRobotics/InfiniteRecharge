@@ -28,12 +28,17 @@ class zCommand
  public:
   zCommand();
 
+  //If this function is not included in the class, it will do nothing
   void Initialize() override;
 
+  //If this function is not included in the class, it will do nothing
   void Execute() override;
 
+  //If this function is not included in the class, it will return FALSE and run forever
+  bool IsFinished() override;
+
+  //If this function is not included in the class, it will do nothing
   void End(bool interrupted) override;
 
-  bool IsFinished() override;
 };
 

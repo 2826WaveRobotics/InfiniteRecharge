@@ -1,16 +1,4 @@
 See file:///D:/Wave2826/InfiniteRecharge/InfiniteRecharge/build/tmp/compileFrcUserProgramDebugExecutableFrcUserProgramCpp/output.txt for all output for compileFrcUserProgramDebugExecutableFrcUserProgramCpp.
-compiling TurretPID.cpp successful.
-
-compiling DrivePID.cpp successful.
-
-compiling Feeder.cpp successful.
-
-compiling ShooterPID.cpp successful.
-
-compiling Climb.cpp successful.
-
-compiling ColorWheel.cpp successful.
-
 compiling Robot.cpp successful.
 
 Finished compileFrcUserProgramDebugExecutableFrcUserProgramCpp, see full log file:///D:/Wave2826/InfiniteRecharge/InfiniteRecharge/build/tmp/compileFrcUserProgramDebugExecutableFrcUserProgramCpp/output.txt.

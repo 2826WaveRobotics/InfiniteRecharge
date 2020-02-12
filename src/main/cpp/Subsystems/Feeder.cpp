@@ -14,4 +14,27 @@ Feeder::Feeder() {
     //AddChild("PhotoEye", photoEye);
 }
 
+// Sets intake speed
+void Feeder::SetIntakeSpeed(double speed)
+{
+    intake->Set(speed);
+}
 
+// Sets hopper speed for both sides
+void Feeder::SetHopperSpeed(double speed)
+{
+    hopperLeft->Set(speed);
+    hopperRight->Set(-speed);
+}
+
+// Sets hopper speed for just left side
+void Feeder::SetHopperLeft(double speed)
+{
+    hopperLeft->Set(speed);
+}
+
+// Sets hopper speed for just right side
+void Feeder::SetHopperRight(double speed)
+{
+    hopperRight->Set(-speed);
+}

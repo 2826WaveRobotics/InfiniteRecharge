@@ -5,11 +5,12 @@ D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\r
 D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\release\\frcUserProgramCpp\\2y0j7bakndhfiijoln8ggh3yt\\OI.o
 D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\release\\frcUserProgramCpp\\3bg5a77l7vd4edmrxq5jco6ri\\Robot.o
 D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\release\\frcUserProgramCpp\\8l31rwiuh7akj0nhhlkq2g6as\\ShooterPID.o
-D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\release\\frcUserProgramCpp\\9h2uo1x5y6jctgr6iousq3x6w\\TurretPID.o
 D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\release\\frcUserProgramCpp\\9yn3225kcwzxnrwa0ktavgkf5\\DrivePID.o
 D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\release\\frcUserProgramCpp\\c6l3cx5xikfkgkym8e3psqfve\\Feeder.o
 D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\release\\frcUserProgramCpp\\cpzt1sp8o91bbsiqe1i2hixu5\\zCommand.o
+D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\release\\frcUserProgramCpp\\dvjz9l0td6e2bsyb7rwawuao4\\zCommandSequence.o
 D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\release\\frcUserProgramCpp\\egqgrx03wsz3ti3dmdz935p3d\\LimeLight.o
+D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\release\\frcUserProgramCpp\\et1hskoyshgy4rfl78v9rx2eb\\Turret.o
 "C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\1e90ed5a0138947440cf461d36c28a76\\wpilibc-cpp-2020.2.2-linuxathena\\linux\\athena\\shared\\libwpilibc.so"
 "C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\75ace60583303967f651932bc2a3d4cd\\ntcore-cpp-2020.2.2-linuxathena\\linux\\athena\\shared\\libntcore.so"
 "C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\a63120862cf2d10103f9d15443bac884\\hal-cpp-2020.2.2-linuxathena\\linux\\athena\\shared\\libwpiHal.so"
@@ -43,12 +44,12 @@ D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\r
 "C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\93646145e3110191cc8e2260e52d7438\\opencv-cpp-3.4.7-2-linuxathena\\linux\\athena\\shared\\libopencv_video.so.3.4"
 "C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\93646145e3110191cc8e2260e52d7438\\opencv-cpp-3.4.7-2-linuxathena\\linux\\athena\\shared\\libopencv_videoio.so.3.4"
 "C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\93646145e3110191cc8e2260e52d7438\\opencv-cpp-3.4.7-2-linuxathena\\linux\\athena\\shared\\libopencv_videostab.so.3.4"
-"C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\50d1ed4dc985ec817f1456f0c938e52e\\navx-cpp-3.1.400-linuxathenastatic\\linux\\athena\\static\\libnavx_frc.a"
-"C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\f52a305f3c690f6e4b6b06e2ec65ea58\\wpiapi-cpp-5.17.4-linuxathenastatic\\linux\\athena\\static\\libCTRE_Phoenix_WPI.a"
-"C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\679ea6045a1d8a042183a637b3ddd2fe\\api-cpp-5.17.4-linuxathenastatic\\linux\\athena\\static\\libCTRE_Phoenix.a"
-"C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\8ad1513e417207e25d72f1badd0d2e63\\cci-5.17.4-linuxathenastatic\\linux\\athena\\static\\libCTRE_PhoenixCCI.a"
-"C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\7b5a1826460909124d0e61ceea68ede3\\diagnostics-5.17.4-linuxathenastatic\\linux\\athena\\static\\libCTRE_PhoenixDiagnostics.a"
-"C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\cefe87b158f8f7d987487262b170312c\\core-5.17.4-linuxathenastatic\\linux\\athena\\static\\libCTRE_PhoenixCore.a"
+"C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\11f9b9dcf55f3b58bd03d1bc20b8421d\\navx-cpp-3.1.409-linuxathenastatic\\linux\\athena\\static\\libnavx_frc.a"
+"C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\727aedbc7487a7dbdcda3fad3625464c\\wpiapi-cpp-5.18.1-linuxathenastatic\\linux\\athena\\static\\libCTRE_Phoenix_WPI.a"
+"C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\c9d891e2eec9c19ea78c13e7848e426b\\api-cpp-5.18.1-linuxathenastatic\\linux\\athena\\static\\libCTRE_Phoenix.a"
+"C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\531aff4a5aaff53de1ccc12461471ae2\\cci-5.18.1-linuxathenastatic\\linux\\athena\\static\\libCTRE_PhoenixCCI.a"
+"C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\9c95e20d88870403a162caa13aa5e1ae\\diagnostics-5.18.1-linuxathenastatic\\linux\\athena\\static\\libCTRE_PhoenixDiagnostics.a"
+"C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\452e290c36e5a797371179c46f187d31\\core-5.18.1-linuxathenastatic\\linux\\athena\\static\\libCTRE_PhoenixCore.a"
 "C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\9acf036a7fa0198f61667215599da89b\\ColorSensorV3-cpp-1.0.1-linuxathenastatic\\linux\\athena\\static\\libColorSensorV3.a"
 "C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\c746920d098bad41f66f127ce1ab3822\\SparkMax-cpp-1.5.1-linuxathenastatic\\linux\\athena\\static\\libSparkMax.a"
 "C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\4661f739d7485288b02776f450f00130\\SparkMax-driver-1.5.1-linuxathenastatic\\linux\\athena\\static\\libSparkMaxDriver.a"

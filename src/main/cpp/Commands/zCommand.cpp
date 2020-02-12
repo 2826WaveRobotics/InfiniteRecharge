@@ -9,6 +9,10 @@
 // it from being updated in the future.
 
 
+// See this link fo rmore info about simplified commands
+// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
+
+
 #include "Commands/zCommand.h"
 
 zCommand::zCommand() {

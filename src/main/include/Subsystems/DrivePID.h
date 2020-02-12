@@ -1,8 +1,9 @@
 #pragma once
 
+#include "AHRS.h"
+#include "frc/drive/DifferentialDrive.h"
 #include "frc2/command/PIDSubsystem.h"
 #include "frc/controller/PIDController.h"
-
 #include "rev/CANSparkMax.h"
 #include "frc/Encoder.h"
 #include "frc/SpeedControllerGroup.h"
@@ -18,9 +19,17 @@ class DrivePID: public frc2::PIDSubsystem {
 	frc::SpeedControllerGroup *rightSide;
 
  	frc2::PIDController& pidController;
+	frc::DifferentialDrive *diffDrive;
+	AHRS *gyro;
+	
 public:
 	DrivePID();
 	double GetMeasurement() override;
 	void UseOutput(double output, double setpoint) override;
+	
+	void ArcadeDrive(double speed, double rotation);
+	void TankDrive(double leftSpeed, double rightSpeed);
+	void ResetEncoders();
+	double GetEncoderDistance();
 };
 

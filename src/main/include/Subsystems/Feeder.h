@@ -17,5 +17,10 @@ private:
 
 public:
 	Feeder();
+
+	void SetIntakeSpeed(double speed);
+	void SetHopperSpeed(double speed);
+	void SetHopperLeft(double speed);
+	void SetHopperRight(double speed);
 };
 

@@ -17,11 +17,14 @@ class ShooterPID: public frc2::PIDSubsystem {
     rev::CANSparkMax *tower1;
 	rev::CANSparkMax *tower2;
 	frc::SpeedControllerGroup *towerGroup;
+
+	double m_rpm;
 public:
 	ShooterPID();
 	double GetMeasurement() override;
 	void UseOutput(double output, double setpoint) override;
 	
 	void SetShooterSpeed(double rpm);
+	void ToggleShooter(bool on);
 };
 

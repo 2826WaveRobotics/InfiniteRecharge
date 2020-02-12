@@ -23,24 +23,54 @@ DrivePID::DrivePID() : PIDSubsystem(frc2::PIDController( 1.0, 0.0, 0.0)),
     // This will be multiplied by the number of motor rotations so that calling GetPosition()
     // Returns a distance rather than a raw number of turns.  
     left1->GetEncoder().SetPositionConversionFactor(0.25);
+    right1->GetEncoder().SetPositionConversionFactor(0.25);
+
+    diffDrive = new frc::DifferentialDrive(*leftSide, *rightSide);
+    gyro = new AHRS(frc::SPI::Port::kMXP, 100);
  
-        // Use these to get going:
-        // SetSetpoint() -  Sets where the PID controller should move the system
-        //                  to
-        // Enable() - Enables the PID controller.
+    // Use these to get going:
+    // SetSetpoint() -  Sets where the PID controller should move the system
+    //                  to
+    // Enable() - Enables the PID controller.
 }
 
 double DrivePID::GetMeasurement() {
     // Return your input value for the PID loop
-    return left1->GetEncoder().GetPosition();
+    return gyro->GetYaw();
 }
+
 
 void DrivePID::UseOutput(double output, double setpoint) {
     // Use output to drive your system, like a motor
     // e.g. yourMotor->Set(output);
     leftSide->PIDWrite(output);
+    rightSide->PIDWrite(output);
 }
 
+// Arcade drive
+void DrivePID::ArcadeDrive(double speed, double rotation)
+{
+    diffDrive->ArcadeDrive(speed, rotation, true);
+}
+
+// Tank drive
+void DrivePID::TankDrive(double leftSpeed, double rightSpeed)
+{
+    diffDrive->TankDrive(leftSpeed, rightSpeed);
+}
+
+// Resets the encoders
+void DrivePID::ResetEncoders()
+{
+    left1->GetEncoder().SetPosition(0);
+    right1->GetEncoder().SetPosition(0);
+}
+
+// Gets distance from encoders
+double DrivePID::GetEncoderDistance() 
+{
+    return left1->GetEncoder().GetPosition();
+}
 
 
 
