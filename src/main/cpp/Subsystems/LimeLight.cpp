@@ -82,29 +82,12 @@ void LimeLight::setPipeline(int num){
 
 int LimeLight::getPipeline()
 {
-    table->GetNumber("getpipe", 0);
+    return table->GetNumber("getpipe", 0);
 }
 
 void LimeLight::activateVisionProcessing(bool vision)
 {
     table->PutNumber("camMode", !vision); ///Vision Mode is 0, Driver Camera is 1
-}
-
-double LimeLight::getTarget()
-{
-    double xOffset = getHorizontalOffset();
-    if (fabs(xOffset) < 1.5) {
-		return -0.10 * xOffset;
-	}
-	else if (fabs(xOffset) < 5) {
-		return -0.25 * xOffset;
-	}
-	else if (fabs(xOffset) < 10) {
-		return -0.35 * xOffset;
-	}
-	else {
-		return -0.45 * xOffset;
-	}
 }
 
 double LimeLight::getDistance(int cameraAngle, double cameraHeight, double targetHeight)

@@ -17,21 +17,21 @@
 
 OI::OI() {
     // Process operator interface input here.
-    op.reset(new frc::XboxController(1));
+    op = new frc::XboxController(1);
 
-    driver.reset(new frc::XboxController(0));
+    driver = new frc::XboxController(0);
 
 
     // SmartDashboard Buttons
-    frc::SmartDashboard::PutData("zCommand", new zCommand());
+   //  frc::SmartDashboard::PutData("zCommand", new zCommand());
 }
 
 
-std::shared_ptr<frc::XboxController> OI::getDriver() {
+frc::XboxController* OI::getDriver() {
    return driver;
 }
 
-std::shared_ptr<frc::XboxController> OI::getOperator() {
+frc::XboxController* OI::getOperator() {
    return op;
 }
 

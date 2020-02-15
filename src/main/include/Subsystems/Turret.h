@@ -8,11 +8,15 @@
 class Turret: public frc2::Subsystem {
 private:	
 	rev::CANSparkMax *turretMotor;
-	
-public:
-	Turret();
+    double m_defaultSpeed = 0;
+	LimeLight *limeLight;
+	bool m_trackingActive;
 
-	void RunTurretTracking(LimeLight *limeLight);
+public:
+	Turret(LimeLight *camera);
+	
+	virtual void Periodic(); //Should be called all of the time from the system Scheduler
+	void SetTracking(bool enable);
 	void SetTurretSpeed(double speed);
 };
 

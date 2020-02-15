@@ -29,7 +29,9 @@ public:
 	
 	void ArcadeDrive(double speed, double rotation);
 	void TankDrive(double leftSpeed, double rightSpeed);
-	void ResetEncoders();
-	double GetEncoderDistance();
+	void ResetDriveEncoders();
+	double GetDriveEncoder();
+	void SetMotorsToBrake();
+	void SetMotorsToCoast();
 };
 

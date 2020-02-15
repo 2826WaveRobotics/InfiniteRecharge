@@ -5,26 +5,31 @@
 #include <frc/Commands/Scheduler.h>
 #include <frc/SmartDashboard/SmartDashboard.h>
 
-// Feeder Robot::feeder;
-// LimeLight Robot::limeLight;
-// Turret Robot::turret;
+
+std::shared_ptr<Feeder> Robot::feeder;
+std::shared_ptr<LimeLight> Robot::limeLight;
+std::shared_ptr<Turret> Robot::turret;
 std::shared_ptr<ShooterPID> Robot::shooterPID;
 std::shared_ptr<DrivePID> Robot::drivePID;
 std::shared_ptr<ColorWheel> Robot::colorWheel;
 std::shared_ptr<Climb> Robot::climb;
 std::unique_ptr<OI> Robot::oi;
 
+
+using namespace frc;
+#define LEFT  GenericHID::JoystickHand::kLeftHand
+#define RIGHT GenericHID::JoystickHand::kRightHand
+
 double p_servoPosition = 0.35;
 
 void Robot::RobotInit() {
-	feeder = new Feeder();
-	limeLight = new LimeLight();
-	turret = new Turret();
+	feeder.reset(new Feeder());
+	limeLight.reset(new LimeLight());
+	turret.reset(new Turret(limeLight.get()));
 	shooterPID.reset(new ShooterPID());
 	drivePID.reset(new DrivePID());
 	colorWheel.reset(new ColorWheel());
 	climb.reset(new Climb());
-	
 	oi.reset(new OI());
 
 	HAL_Report(HALUsageReporting::kResourceType_Framework,
@@ -48,6 +53,7 @@ void Robot::AutonomousInit() {
 }
 
 void Robot::AutonomousPeriodic() {
+	limeLight.get()->updateLimeLight();
 	frc::Scheduler::GetInstance()->Run();
 }
 
@@ -57,22 +63,41 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
+	limeLight.get()->updateLimeLight();
 	frc::Scheduler::GetInstance()->Run();
 
+	////   Drive    /////////////////////////////////////////////////////
+	
+	drivePID.get()->ArcadeDrive(oi->getDriver()->GetY(LEFT), oi->getDriver()->GetX(RIGHT));
+
+
+	////   Feeder & Hopper   ////////////////////////////////////////////
+
+
+
+	////    Tower & Shooter   ///////////////////////////////////////////
+
+
+
+	////   Vision Tracking and Turret  /////////////////////////////////
+	turret.get()->SetTracking(true);
+
+
+	////   Color Wheel     ///////////////////////////////////////////////
 	colorWheel.get()->printClosestColor();
 
-	if ((oi.get()->getOperator().get()->GetAButtonPressed()) && (p_servoPosition < 1))
+
+	////  CLimb & Servo    //////////////////////////////////////////////////////////////
+	if ((oi.get()->getOperator()->GetAButtonPressed()) && (p_servoPosition < 1))
 	{
 		p_servoPosition = 0.15;
 	}
-	else if ((oi.get()->getOperator().get()->GetBButtonPressed()) && (p_servoPosition > 0))
+	else if ((oi.get()->getOperator()->GetBButtonPressed()) && (p_servoPosition > 0))
 	{
 		p_servoPosition = 0.325;
 	}
 	climb.get()->SetServoPosition(p_servoPosition);
 	std::cout << "Servo Position: " << p_servoPosition << std::endl;
-
-	turret->RunTurretTracking(limeLight);
 
 }//TeleopPeriodic
 

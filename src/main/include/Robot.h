@@ -19,17 +19,18 @@
 class Robot : public frc::TimedRobot {
 public:
 	frc2::Command* autonomousCommand = nullptr;
-	static std::unique_ptr<OI> oi;
-	//frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
 	frc::SendableChooser<frc2::Command*> chooser;
 
-	Feeder *feeder;
-	LimeLight *limeLight;
-	Turret *turret;
-static std::shared_ptr<ShooterPID> shooterPID;
-static std::shared_ptr<DrivePID> drivePID;
-static std::shared_ptr<ColorWheel> colorWheel;
-static std::shared_ptr<Climb> climb;
+	
+	static std::shared_ptr<Feeder> feeder;
+	static std::shared_ptr<LimeLight> limeLight;
+	static std::shared_ptr<Turret> turret;
+	static std::shared_ptr<ShooterPID> shooterPID;
+	static std::shared_ptr<DrivePID> drivePID;
+	static std::shared_ptr<ColorWheel> colorWheel;
+	static std::shared_ptr<Climb> climb;
+	static std::unique_ptr<OI> oi;
+	
 	void RobotInit() override;
 	void DisabledInit() override;
 	void DisabledPeriodic() override;

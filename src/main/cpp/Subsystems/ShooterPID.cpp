@@ -11,17 +11,16 @@ ShooterPID::ShooterPID() : PIDSubsystem(frc2::PIDController( 1.0, 0.0, 0.0)),
     
     shooter1 = new WPI_TalonFX(SHOOTER_1);
     shooter2 = new WPI_TalonFX(SHOOTER_2);
+    shooter1->SetNeutralMode(phoenix::motorcontrol::Coast);
+    shooter2->SetNeutralMode(phoenix::motorcontrol::Coast);
     shooterGroup = new frc::SpeedControllerGroup(*shooter1, *shooter2);
     tower1 = new CANSparkMax(TOWER_1, CANSparkMaxLowLevel::MotorType::kBrushless);
     tower2 = new CANSparkMax(TOWER_2, CANSparkMaxLowLevel::MotorType::kBrushless);
+    tower1->SetIdleMode(CANSparkMax::IdleMode::kBrake);
+    tower2->SetIdleMode(CANSparkMax::IdleMode::kBrake);
     towerGroup = new frc::SpeedControllerGroup(*tower1, *tower2);
-
-    m_rpm = 0;
     
-    // Use these to get going:
-    // SetSetpoint() -  Sets where the PID controller should move the system
-    //                  to
-    // Enable() - Enables the PID controller.
+    m_defaultSpeed = 0;
 
 }
 
@@ -49,21 +48,24 @@ void ShooterPID::UseOutput(double output, double setpoint) {
 // Sets the shooter speed
 void ShooterPID::SetShooterSpeed(double rpm)
 {
-    m_rpm = rpm;
-    SetSetpoint(rpm);
-}
-
-// Turns the shooter on or off
-void ShooterPID::ToggleShooter(bool on)
-{
-    if (on) {
-        // Remembers the last speed the shooter was set to when turned on
-        SetShooterSpeed(m_rpm);
-    }
-    else
+    static double s_lastSetSpeed = 0;
+    if(rpm != s_lastSetSpeed)
     {
-        SetShooterSpeed(0);
+        if(rpm > 0)
+        {
+            SetSetpoint(rpm);
+            Enable();
+        }
+        else
+        {
+            Disable();
+        }
     }
+    s_lastSetSpeed = rpm;    
 }
 
+void ShooterPID::SetTowerSpeed(double speed)
+{
+    towerGroup->Set(speed);
+}
 

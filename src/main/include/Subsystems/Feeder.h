@@ -20,7 +20,6 @@ public:
 
 	void SetIntakeSpeed(double speed);
 	void SetHopperSpeed(double speed);
-	void SetHopperLeft(double speed);
-	void SetHopperRight(double speed);
+	void SetIndividualHopperSpeed(double leftSpeed, double rightSpeed);
 };
 

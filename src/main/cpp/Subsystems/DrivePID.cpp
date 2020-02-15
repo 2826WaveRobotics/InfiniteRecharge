@@ -5,7 +5,7 @@ using namespace rev;
 
 DrivePID::DrivePID() : PIDSubsystem(frc2::PIDController( 1.0, 0.0, 0.0)),
     pidController(GetController())
- {
+{
     pidController.DisableContinuousInput();
     pidController.SetTolerance(0.2);
 
@@ -28,10 +28,6 @@ DrivePID::DrivePID() : PIDSubsystem(frc2::PIDController( 1.0, 0.0, 0.0)),
     diffDrive = new frc::DifferentialDrive(*leftSide, *rightSide);
     gyro = new AHRS(frc::SPI::Port::kMXP, 100);
  
-    // Use these to get going:
-    // SetSetpoint() -  Sets where the PID controller should move the system
-    //                  to
-    // Enable() - Enables the PID controller.
 }
 
 double DrivePID::GetMeasurement() {
@@ -60,17 +56,34 @@ void DrivePID::TankDrive(double leftSpeed, double rightSpeed)
 }
 
 // Resets the encoders
-void DrivePID::ResetEncoders()
+void DrivePID::ResetDriveEncoders()
 {
     left1->GetEncoder().SetPosition(0);
     right1->GetEncoder().SetPosition(0);
 }
 
-// Gets distance from encoders
-double DrivePID::GetEncoderDistance() 
+// Gets position from encoders
+double DrivePID::GetDriveEncoder() 
 {
     return left1->GetEncoder().GetPosition();
 }
 
+void DrivePID::SetMotorsToBrake()
+{
+    left1->SetIdleMode(CANSparkMax::IdleMode::kBrake);
+    left2->SetIdleMode(CANSparkMax::IdleMode::kBrake);
+    left3->SetIdleMode(CANSparkMax::IdleMode::kBrake);
+    right1->SetIdleMode(CANSparkMax::IdleMode::kBrake);
+    right2->SetIdleMode(CANSparkMax::IdleMode::kBrake);
+    right3->SetIdleMode(CANSparkMax::IdleMode::kBrake);
+}
 
-
+void DrivePID::SetMotorsToCoast()
+{
+    left1->SetIdleMode(CANSparkMax::IdleMode::kCoast);
+    left2->SetIdleMode(CANSparkMax::IdleMode::kCoast);
+    left3->SetIdleMode(CANSparkMax::IdleMode::kCoast);
+    right1->SetIdleMode(CANSparkMax::IdleMode::kCoast);
+    right2->SetIdleMode(CANSparkMax::IdleMode::kCoast);
+    right3->SetIdleMode(CANSparkMax::IdleMode::kCoast);
+}

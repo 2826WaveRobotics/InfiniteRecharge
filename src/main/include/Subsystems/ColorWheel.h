@@ -21,6 +21,9 @@ private:
   const frc::Color kRedTarget = frc::Color(1.0, 0.0, 0.0);    //CMYK = 0, 100, 100, 0
   const frc::Color kYellowTarget = frc::Color(1.0, 1.0, 0.0); //CMYK = 0, 0, 100, 0
 
+  //Information on how to access the required color from FMS can be found here:
+  //https://frc-docs.readthedocs.io/en/latest/docs/software/wpilib-overview/2020-Game-Data.html
+
 public:
   ColorWheel();
   //void InitDefaultCommand() override;

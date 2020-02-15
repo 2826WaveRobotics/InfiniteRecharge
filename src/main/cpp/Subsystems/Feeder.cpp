@@ -7,6 +7,10 @@ Feeder::Feeder() {
     hopperRight = new CANSparkMax(HOPPER_RIGHT, CANSparkMaxLowLevel::MotorType::kBrushless);
     intake = new CANSparkMax(INTAKE, CANSparkMaxLowLevel::MotorType::kBrushless);
 
+    hopperLeft->SetIdleMode(CANSparkMax::IdleMode::kBrake);
+    hopperRight->SetIdleMode(CANSparkMax::IdleMode::kBrake);
+    intake->SetIdleMode(CANSparkMax::IdleMode::kBrake);
+
     pDBoard = new frc::PowerDistributionPanel(0);
     //AddChild("PDBoard", pDBoard);
 
@@ -27,14 +31,9 @@ void Feeder::SetHopperSpeed(double speed)
     hopperRight->Set(-speed);
 }
 
-// Sets hopper speed for just left side
-void Feeder::SetHopperLeft(double speed)
+// Sets hopper speed for individual sides
+void Feeder::SetIndividualHopperSpeed(double leftSpeed, double rightSpeed)
 {
-    hopperLeft->Set(speed);
-}
-
-// Sets hopper speed for just right side
-void Feeder::SetHopperRight(double speed)
-{
-    hopperRight->Set(-speed);
+    hopperLeft->Set(leftSpeed);
+    hopperRight->Set(-rightSpeed);
 }
