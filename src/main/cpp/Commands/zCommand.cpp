@@ -20,7 +20,7 @@ zCommand::zCommand() {
 }
 
 // Called when the command is initially scheduled.
-void zCommand::Initialize() {}
+void zCommand::Initialize() { std::cout << "Hello Wave!" << std::endl;}
 
 // Called repeatedly when this Command is scheduled to run
 void zCommand::Execute() {}

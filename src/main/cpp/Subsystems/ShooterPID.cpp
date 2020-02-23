@@ -7,18 +7,22 @@ ShooterPID::ShooterPID() : PIDSubsystem(frc2::PIDController( 1.0, 0.0, 0.0)),
     pidController(GetController())
 {
     pidController.DisableContinuousInput();
-    pidController.SetTolerance(0.2);
+    pidController.SetTolerance(5);
     
-    shooter1 = new WPI_TalonFX(SHOOTER_1);
-    shooter2 = new WPI_TalonFX(SHOOTER_2);
-    shooter1->SetNeutralMode(phoenix::motorcontrol::Coast);
-    shooter2->SetNeutralMode(phoenix::motorcontrol::Coast);
+    shooter1 = new CANSparkMax(SHOOTER_1, CANSparkMaxLowLevel::MotorType::kBrushless);
+    shooter2 = new CANSparkMax(SHOOTER_2, CANSparkMaxLowLevel::MotorType::kBrushless);
+    shooter1->SetIdleMode(CANSparkMax::IdleMode::kCoast);
+    shooter2->SetIdleMode(CANSparkMax::IdleMode::kCoast);
+    shooter2->SetInverted(true);
     shooterGroup = new frc::SpeedControllerGroup(*shooter1, *shooter2);
     tower1 = new CANSparkMax(TOWER_1, CANSparkMaxLowLevel::MotorType::kBrushless);
     tower2 = new CANSparkMax(TOWER_2, CANSparkMaxLowLevel::MotorType::kBrushless);
     tower1->SetIdleMode(CANSparkMax::IdleMode::kBrake);
     tower2->SetIdleMode(CANSparkMax::IdleMode::kBrake);
+    tower2->SetInverted(true);
     towerGroup = new frc::SpeedControllerGroup(*tower1, *tower2);
+
+    ballSensor = new frc::DigitalInput(IR_SENSOR);
     
     m_defaultSpeed = 0;
 
@@ -30,7 +34,9 @@ double ShooterPID::GetMeasurement() {
     // yourPot->SetAverageVoltage() / kYourMaxVoltage;
     
     //Need to get raw speed. Will probably have to reference the CTRE software
-    return shooter1->GetSensorCollection().GetIntegratedSensorVelocity();  
+    //return shooter1->GetSensorCollection().GetIntegratedSensorVelocity();  
+    
+    return shooter1->GetEncoder().GetVelocity();
 }
 
 void ShooterPID::UseOutput(double output, double setpoint) {
@@ -67,5 +73,10 @@ void ShooterPID::SetShooterSpeed(double rpm)
 void ShooterPID::SetTowerSpeed(double speed)
 {
     towerGroup->Set(speed);
+}
+
+bool ShooterPID::GetBallSensor()
+{
+    return ballSensor->Get();
 }
 

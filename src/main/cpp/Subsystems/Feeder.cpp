@@ -11,6 +11,7 @@ Feeder::Feeder() {
     hopperRight->SetIdleMode(CANSparkMax::IdleMode::kBrake);
     intake->SetIdleMode(CANSparkMax::IdleMode::kBrake);
 
+
     pDBoard = new frc::PowerDistributionPanel(0);
     //AddChild("PDBoard", pDBoard);
 

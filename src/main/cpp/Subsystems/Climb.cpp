@@ -5,7 +5,7 @@ using namespace rev;
 
 Climb::Climb() {
     climbMotor = new CANSparkMax(CLIMB, CANSparkMaxLowLevel::MotorType::kBrushless);
-    ratchetServo = new frc::Servo(0);
+    ratchetServo = new frc::Servo(RATCHET_SERVO);
 }
 
 // Reads servo position

@@ -26,6 +26,7 @@ DrivePID::DrivePID() : PIDSubsystem(frc2::PIDController( 1.0, 0.0, 0.0)),
     right1->GetEncoder().SetPositionConversionFactor(0.25);
 
     diffDrive = new frc::DifferentialDrive(*leftSide, *rightSide);
+    diffDrive->SetRightSideInverted(true);
     gyro = new AHRS(frc::SPI::Port::kMXP, 100);
  
 }
@@ -46,13 +47,13 @@ void DrivePID::UseOutput(double output, double setpoint) {
 // Arcade drive
 void DrivePID::ArcadeDrive(double speed, double rotation)
 {
-    diffDrive->ArcadeDrive(speed, rotation, true);
+    diffDrive->ArcadeDrive(-speed, -rotation, true);
 }
 
 // Tank drive
 void DrivePID::TankDrive(double leftSpeed, double rightSpeed)
 {
-    diffDrive->TankDrive(leftSpeed, rightSpeed);
+    diffDrive->TankDrive(-leftSpeed, -rightSpeed);
 }
 
 // Resets the encoders

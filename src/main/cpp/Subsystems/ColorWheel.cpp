@@ -74,5 +74,5 @@ void ColorWheel::printClosestColor()
     //     std::cout << "Did Not Match Color";
     // }
 
-    // std::cout << std::endl;
+    std::cout << std::endl;
 }

@@ -50,18 +50,20 @@ void Turret::Periodic()
 
         // Will run the turret to find the missing target
         else {
-            speed = m_defaultSpeed;
+            speed = 0; //m_defaultSpeed;
         }
 
         // Sets the turret speed
         SetTurretSpeed(speed);
-    }
-}//Periodic
+    }//if tracking active
+} 
+// Periodic
 
 // Sets turret speed for manual override
 void Turret::SetTurretSpeed(double speed)
 {
 	turretMotor->Set(speed);
+    // m_defaultSpeed = speed;
 }
 
 void Turret::SetTracking(bool enable)

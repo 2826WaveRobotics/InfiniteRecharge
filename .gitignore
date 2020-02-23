@@ -5,3 +5,5 @@ build/tmp/compileFrcUserProgramDebugExecutableFrcUserProgramCpp/output.txt
 .gradle/6.0.1/fileContent/parsedCSource.bin
 .gradle/6.0.1/fileContent/fileContent.lock
 .gradle/6.0.1/executionHistory/executionHistory.lock
+*.bin
+*.o

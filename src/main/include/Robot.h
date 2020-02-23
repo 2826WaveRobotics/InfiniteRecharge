@@ -19,6 +19,7 @@
 class Robot : public frc::TimedRobot {
 public:
 	frc2::Command* autonomousCommand = nullptr;
+	frc2::Command* initialWaitCommand = nullptr;
 	frc::SendableChooser<frc2::Command*> chooser;
 
 	
