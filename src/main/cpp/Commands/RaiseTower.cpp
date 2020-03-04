@@ -22,7 +22,12 @@ RaiseTower::RaiseTower(double speed) {
 
 // Called repeatedly when this Command is scheduled to run
 void RaiseTower::Initialize() {
-  Robot::shooterPID.get()->SetTowerSpeed(m_speed);
+  Robot::feeder.get()->SetAutoFeed(false);
+  Robot::feeder.get()->SetFeederSystem(m_speed);
+}
+
+void RaiseTower::End(bool interrupted) {
+  Robot::feeder.get()->SetAutoFeed(true);
 }
 
 bool RaiseTower::IsFinished() {

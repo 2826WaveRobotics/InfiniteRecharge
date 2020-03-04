@@ -5,15 +5,18 @@
 //#include <frc/Commands/Scheduler.h>
 #include <frc2/command/CommandScheduler.h>
 #include <frc/SmartDashboard/SmartDashboard.h>
-
+#include "cameraserver/CameraServer.h"
 #include "Commands/FireBalls.h"
 #include "frc2/command/WaitCommand.h"
+#include <cscore_oo.h>
+
 
 
 std::shared_ptr<Feeder> Robot::feeder;
 std::shared_ptr<LimeLight> Robot::limeLight;
 std::shared_ptr<Turret> Robot::turret;
-std::shared_ptr<ShooterPID> Robot::shooterPID;
+// std::shared_ptr<ShooterPID> Robot::shooterPID;
+std::shared_ptr<ShooterPlain> Robot::shooterPlain;
 std::shared_ptr<DrivePID> Robot::drivePID;
 std::shared_ptr<ColorWheel> Robot::colorWheel;
 std::shared_ptr<Climb> Robot::climb;
@@ -26,18 +29,27 @@ using namespace frc2;
 #define LEFT  GenericHID::JoystickHand::kLeftHand
 #define RIGHT GenericHID::JoystickHand::kRightHand
 
+static double p_shooterSpeed = 0.0;
 static double p_initialDelay = 0.0;
-static bool p_servoLock = true;
+static double p_autoTracking = true;
+
+// static bool p_servoLock = true;
+
+cs::UsbCamera lifeCam("lifecam", 0);
 
 void Robot::RobotInit() {
 	feeder.reset(new Feeder());
 	limeLight.reset(new LimeLight());
 	turret.reset(new Turret(limeLight.get()));
-	shooterPID.reset(new ShooterPID());
+	// shooterPID.reset(new ShooterPID());
+	shooterPlain.reset(new ShooterPlain());
 	drivePID.reset(new DrivePID());
 	colorWheel.reset(new ColorWheel());
 	climb.reset(new Climb());
 	oi.reset(new OI());
+	
+	lifeCam.SetBrightness(50);
+	CameraServer::GetInstance()->StartAutomaticCapture();
 
 	HAL_Report(HALUsageReporting::kResourceType_Framework,
 		HALUsageReporting::kFramework_RobotBuilder);
@@ -50,6 +62,8 @@ void Robot::RobotInit() {
 void Robot::DisabledInit(){
 	turret.get()->SetTracking(false);
 	turret.get()->SetTurretSpeed(0.0);
+	turret.get()->setBrake(false);
+	climb.get()->setBrake(true);
 }
 
 void Robot::DisabledPeriodic() {
@@ -59,6 +73,7 @@ void Robot::DisabledPeriodic() {
 void Robot::AutonomousInit() {
 	p_initialDelay = frc::SmartDashboard::GetNumber("Initial Delay", 0.0);
 	std::cout << "Initial Delay: " << p_initialDelay << std::endl;
+	turret.get()->setBrake(true);
 	if(p_initialDelay > 0.0)
 	{
 		initialWaitCommand = new WaitCommand((units::second_t)p_initialDelay);
@@ -81,6 +96,7 @@ void Robot::AutonomousPeriodic() {
 
 	if(p_initialDelay > 0.0)
 	{
+		drivePID.get()->ArcadeDrive(0.1, 0.0);
 		//Wait until the InitialWaitCommand is done before scheduling the autonomousCommand
 		if(initialWaitCommand->IsFinished() && (autonomousCommand != nullptr))
 		{
@@ -93,11 +109,14 @@ void Robot::AutonomousPeriodic() {
 void Robot::TeleopInit() {
 	if (autonomousCommand != nullptr)
 		autonomousCommand->Cancel();
+	turret.get()->setBrake(true);
+	
 }
 
 void Robot::TeleopPeriodic() {
 	limeLight.get()->updateLimeLight();
 	frc2::CommandScheduler::GetInstance().Run();
+	//turret.get()->SetTracking(true); //aDDED THIS
 
 	////   Drive   ////////////////////////////////////////////////////////////////////
 
@@ -112,73 +131,106 @@ void Robot::TeleopPeriodic() {
 	drivePID.get()->ArcadeDrive(driveSpeed, driveRotation);
 
 
-	////   Feeder & Hopper   /////////////////////////////////////////////////////////
+	////   Feeder   ////////////////////////////////////////////////////////////////////
 
+	feeder.get()->SetAutoFeed(false);
 	double feederIn = oi.get()->getOperator()->GetTriggerAxis(LEFT);
-	double feederOut = oi.get()->getOperator()->GetTriggerAxis(RIGHT);
+	bool feederOut = oi.get()->getOperator()->GetBumper(LEFT);
 	if (fabs(feederIn) >= 0.1) {
 		feeder.get()->SetIntakeSpeed(feederIn);
 	}
-	else if (fabs(feederOut) >= 0.1) {
-		feeder.get()->SetIntakeSpeed(-feederOut);
+	else if (feederOut) {
+		feeder.get()->SetIntakeSpeed(-1.0);
 	}
 	else {
-		feeder.get()->SetIntakeSpeed(0);
+		feeder.get()->SetIntakeSpeed(0.0);
 	}
 
-	if (oi.get()->getOperator()->GetAButton()) {
-		feeder.get()->SetHopperSpeed(0.75);
+
+	////   Tower & Hopper   ////////////////////////////////////////////////////////////	
+	
+	double towerUp = oi.get()->getOperator()->GetTriggerAxis(RIGHT);
+	bool towerDown = oi.get()->getOperator()->GetBumper(RIGHT);
+	if (fabs(towerUp) >= 0.1) {
+		feeder.get()->SetAutoFeed(false);
+		feeder.get()->SetFeederSystem(towerUp * -0.75);
+		std::cout << "Manual Ball Feeding" << std::endl;
 	}
-	else if (oi.get()->getOperator()->GetBButton()) {
-		feeder.get()->SetIndividualHopperSpeed(0.75, -0.75);
+	else if (towerDown) {
+		feeder.get()->SetAutoFeed(false);
+		feeder.get()->SetFeederSystem(0.75);
+		std::cout << "Manual Ball Feeding" << std::endl;
 	}
-	else 
-		feeder.get()->SetHopperSpeed(0);
-
-
-	////   Tower & Shooter   //////////////////////////////////////////////////////////	
-
-	double towerSpeed = oi.get()->getOperator()->GetY(LEFT);
-	if (fabs(towerSpeed) < 0.1) {
-		towerSpeed = 0;
+	else {
+		feeder.get()->SetAutoFeed(true);
+		std::cout << "Auto Ball Feeding" << std::endl;
 	}
-	shooterPID.get()->SetTowerSpeed(towerSpeed);
 
-	 shooterPID.get()->SetShooterSpeed(500);
-
-	std::cout << "Ball Sensor: " << shooterPID.get()->GetBallSensor() << std::endl;
+	if(oi.get()->getOperator()->GetBButtonPressed()) {
+		// p_shooterSpeed = 0.0;
+        shooterPlain.get()->setRpm(0);
+	}
+	else if(oi.get()->getOperator()->GetAButtonPressed()) {
+		// p_shooterSpeed = 0.55;
+	    shooterPlain.get()->setRpm(2500);
+	}
+	else if(oi.get()->getOperator()->GetXButtonPressed()) {
+		// p_shooterSpeed = 0.65;
+	    shooterPlain.get()->setRpm(3050);
+	}
 
 
 	////   Vision Tracking and Turret   ///////////////////////////////////////////////	
 
 	double turretSpeed = oi.get()->getOperator()->GetX(LEFT);
-	if (fabs(turretSpeed) < 0.1) {
-		turret.get()->SetTracking(true);
-		std::cout<<"set tracking true"<<std::endl;
+	if (fabs(turretSpeed) >= 0.1) {
+		turret.get()->SetTracking(false);
+		turret.get()->SetTurretSpeed(-turretSpeed);
+		std::cout << "Manual Turret Targeting" << std::endl;
 	}
 	else {
-		turret.get()->SetTracking(false);
-		turret.get()->SetTurretSpeed(turretSpeed);
-		std::cout<<"set tracking false"<<std::endl;
+		turret.get()->SetTracking(p_autoTracking);
+		if (!p_autoTracking) {
+			turret.get()->SetTurretSpeed(0);
+		}
 	}
+
+	if (oi.get()->getOperator()->GetStartButtonPressed()) {
+		p_autoTracking = !p_autoTracking;
+	}
+
+	std::cout << " Rotation Count: " << turret.get()->getHexRotationCount() << std::endl;
 
 
 	////   Color Wheel   //////////////////////////////////////////////////////////////	
 
-	colorWheel.get()->printClosestColor();
+	//colorWheel.get()->printClosestColor();
 
 
 	////  CLimb & Servo   /////////////////////////////////////////////////////////////
-
-	if (oi.get()->getDriver()->GetBackButton()) {
-		p_servoLock = !p_servoLock;
-	}
-	climb.get()->ToggleServoLock(p_servoLock);
-	std::cout << "Servo Position: " << climb.get()->GetServoPosition() << std::endl;
-
-	climb.get()->SetClimbSpeed(oi.get()->getDriver()->GetTriggerAxis(RIGHT));
-	climb.get()->SetClimbSpeed(-(oi.get()->getDriver()->GetTriggerAxis(LEFT)));
-
+	
+	// if (oi.get()->getDriver()->GetBackButton()) {
+	// 	p_servoLock = !p_servoLock;
+	// }
+	// climb.get()->ToggleServoLock(p_servoLock);
+	//std::cout << "Servo Position: " << climb.get()->GetServoPosition() << std::endl;
+	double climbspeed = oi.get()->getDriver()->GetTriggerAxis(RIGHT);
+	double negativeclimbspeed = oi.get()->getDriver()->GetTriggerAxis(LEFT);
+		if ((fabs(climbspeed) >= 0.1) && climb.get()->ClimbLimitReached() == false) {
+			climb.get()->SetClimbSpeed(climbspeed);
+		}
+		else if ((fabs(negativeclimbspeed) >= 0.1) && climb.get()->ClimbLimitReached() == false)
+		{
+			climb.get()->SetClimbSpeed(-negativeclimbspeed);
+		}
+		else
+		{
+			climb.get()->SetClimbSpeed(0);
+		}
+		
+		
+	
+	std::cout << " Rotation Count: " << climb.get()->GetClimbRotationCount() << std::endl;
 } 
 // End TeleopPeriodic
 

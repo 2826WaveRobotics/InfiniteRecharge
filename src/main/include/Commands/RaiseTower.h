@@ -34,6 +34,8 @@ private:
   //If this function is not included in the class, it will do nothing
   void Initialize() override;
 
+  void End(bool interrupted) override;
+
   bool IsFinished() override;
 };
 

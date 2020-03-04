@@ -17,13 +17,13 @@
 #include "Robot.h"
 
 SetShooterSpeedCommand::SetShooterSpeedCommand(double rpm) {
-  AddRequirements(Robot::shooterPID.get());
+  // AddRequirements(Robot::shooterPID.get());
   m_shooterSpeed = rpm;
 }
 
 // Called when the command is initially scheduled.
 void SetShooterSpeedCommand::Initialize() {
-  Robot::shooterPID.get()->SetShooterSpeed(m_shooterSpeed);
+  // Robot::shooterPID.get()->SetShooterSpeed(m_shooterSpeed);
 }
 
 

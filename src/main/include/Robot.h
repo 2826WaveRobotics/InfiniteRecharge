@@ -10,6 +10,7 @@
 #include "Subsystems/DrivePID.h"
 #include "Subsystems/Feeder.h"
 #include "Subsystems/ShooterPID.h"
+#include "Subsystems/ShooterPlain.h"
 #include "Subsystems/Turret.h"
 #include "Subsystems/Climb.h"
 #include "Subsystems/LimeLight.h"
@@ -26,7 +27,8 @@ public:
 	static std::shared_ptr<Feeder> feeder;
 	static std::shared_ptr<LimeLight> limeLight;
 	static std::shared_ptr<Turret> turret;
-	static std::shared_ptr<ShooterPID> shooterPID;
+	// static std::shared_ptr<ShooterPID> shooterPID;
+	static std::shared_ptr<ShooterPlain> shooterPlain;
 	static std::shared_ptr<DrivePID> drivePID;
 	static std::shared_ptr<ColorWheel> colorWheel;
 	static std::shared_ptr<Climb> climb;

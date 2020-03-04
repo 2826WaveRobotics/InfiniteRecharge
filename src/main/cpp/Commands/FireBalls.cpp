@@ -13,7 +13,7 @@ FireBalls::FireBalls() {
 
       // Add commands comma separated. No comma after the last one
       
-      SetShooterSpeedCommand(2000),
+      SetShooterSpeedCommand(2600),
       WaitCommand((units::second_t)5.0), //Seconds to wait beofre we start shooting
       RaiseTower(0.5),
       WaitCommand((units::second_t)5.0), 
