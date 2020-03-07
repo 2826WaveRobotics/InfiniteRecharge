@@ -14,5 +14,6 @@ public:
   ShooterPlain();
   void setSpeed(double speed);
   void setRpm(double rpm);
+  double GetVelocity();
 };
 

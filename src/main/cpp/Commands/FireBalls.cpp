@@ -1,8 +1,10 @@
 #include "Commands/FireBalls.h"
 #include "Commands/SetShooterSpeedCommand.h"
-#include "Commands/RaiseTower.h"
+#include "Commands/ArcadeDriveCommand.h"
+#include "Commands/RaiseTowerCommand.h"
+#include "Commands/WaveWaitCommand.h"
+#include "Commands/TowerAndDrive.h"
 
-#include "frc2/command/WaitCommand.h"
 using namespace frc2;
 
 FireBalls::FireBalls() {
@@ -14,10 +16,6 @@ FireBalls::FireBalls() {
       // Add commands comma separated. No comma after the last one
       
       SetShooterSpeedCommand(2600),
-      WaitCommand((units::second_t)5.0), //Seconds to wait beofre we start shooting
-      RaiseTower(0.5),
-      WaitCommand((units::second_t)5.0), 
-      RaiseTower(0.0),
-      SetShooterSpeedCommand(0)
+      TowerAndDrive()
   );
 }

@@ -23,9 +23,21 @@ SetShooterSpeedCommand::SetShooterSpeedCommand(double rpm) {
 
 // Called when the command is initially scheduled.
 void SetShooterSpeedCommand::Initialize() {
-  // Robot::shooterPID.get()->SetShooterSpeed(m_shooterSpeed);
+   Robot::shooterPlain.get()->setRpm(m_shooterSpeed);
 }
 
+// Called when the command is initially scheduled.
+void SetShooterSpeedCommand::Execute() {
+   Robot::shooterPlain.get()->setRpm(m_shooterSpeed);
+}
 
 // Return true right away because the we only need to set the shooter speed once.
-bool SetShooterSpeedCommand::IsFinished() { return true; }
+bool SetShooterSpeedCommand::IsFinished() { 
+  //std::cout << "Shooter is Finished!" << std::endl;
+  return false; 
+}
+
+void SetShooterSpeedCommand::End(bool interrupted)
+{
+   Robot::shooterPlain.get()->setRpm(500);
+}

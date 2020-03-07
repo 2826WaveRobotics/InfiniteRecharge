@@ -33,5 +33,12 @@ public:
 	double GetDriveEncoder();
 	void SetMotorsToBrake();
 	void SetMotorsToCoast();
+	
+	// void SetDirection(double heading);
+	// void DriveStraight(double power, double heading);
+	// void DriveAccelerate(double distance, double power, double heading);
+	// void DriveDeaccelerate(double distance, double power);
+	// void DriveDistance(double distance, double power, double heading);
+	// void DriveStop(double distance);
 };
 

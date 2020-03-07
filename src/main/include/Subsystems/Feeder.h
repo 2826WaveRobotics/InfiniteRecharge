@@ -35,6 +35,7 @@ public:
 	void SetTowerSpeed(double speed);
 	void SetHopperSpeed(double leftSpeed, double rightSpeed);
 	void SetFeederSystem(double speed);
+	void SetTowerBrakeMode(bool brake);
 
 	bool GetLowerSensor();
 	bool GetUpperSensor();

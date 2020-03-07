@@ -81,6 +81,7 @@ void Turret::SetTurretSpeed(double speed)
 void Turret::SetTracking(bool enable)
 {
     m_trackingActive = enable;
+    limeLight->setLED(enable);
 }
 
 bool Turret::IsTracking() 

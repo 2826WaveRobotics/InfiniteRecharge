@@ -5,7 +5,7 @@ using namespace rev;
 Feeder::Feeder() {
     hopperLeft = new CANSparkMax(HOPPER_LEFT, CANSparkMaxLowLevel::MotorType::kBrushless);
     hopperRight = new CANSparkMax(HOPPER_RIGHT, CANSparkMaxLowLevel::MotorType::kBrushless);
-    intake = new CANSparkMax(INTAKE, CANSparkMaxLowLevel::MotorType::kBrushless);
+    intake = new CANSparkMax(INTAKE, CANSparkMax::MotorType::kBrushless);
 
     hopperLeft->SetIdleMode(CANSparkMax::IdleMode::kBrake);
     hopperRight->SetIdleMode(CANSparkMax::IdleMode::kBrake);
@@ -13,8 +13,8 @@ Feeder::Feeder() {
 
     tower1 = new CANSparkMax(TOWER_1, CANSparkMaxLowLevel::MotorType::kBrushless);
     tower2 = new CANSparkMax(TOWER_2, CANSparkMaxLowLevel::MotorType::kBrushless);
-    tower1->SetIdleMode(CANSparkMax::IdleMode::kCoast);
-    tower2->SetIdleMode(CANSparkMax::IdleMode::kCoast);
+    tower1->SetIdleMode(CANSparkMax::IdleMode::kBrake);
+    tower2->SetIdleMode(CANSparkMax::IdleMode::kBrake);
     tower2->SetInverted(true);
     tower1->SetOpenLoopRampRate(2);
     tower2->SetOpenLoopRampRate(2);
@@ -46,6 +46,8 @@ void Feeder::SetHopperSpeed(double leftSpeed, double rightSpeed)
 void Feeder::SetTowerSpeed(double speed)
 {
     towerGroup->Set(speed);
+    
+    //std::cout << "Tower Speed: " << speed << std::endl;
 }
 
 // Sets the speed for both the hopper and the tower 
@@ -54,7 +56,9 @@ void Feeder::SetFeederSystem(double speed)
     SetTowerSpeed(speed);
     
     speed = speed * 0.5;
-    SetHopperSpeed(speed, speed);
+    SetHopperSpeed(speed, speed * 0.25);
+
+   // std::cout << "Feeder System: " << speed << std::endl;
 }
 
 bool Feeder::GetLowerSensor()
@@ -97,4 +101,18 @@ void Feeder::Periodic()
 void Feeder::SetAutoFeed(bool enable)
 {
     m_autoFeed = enable;
+}
+
+void Feeder::SetTowerBrakeMode(bool brake) 
+{
+    if (brake) 
+    {
+        tower1->SetIdleMode(CANSparkMax::IdleMode::kBrake);
+        tower2->SetIdleMode(CANSparkMax::IdleMode::kBrake);
+    }
+    else 
+    {
+        tower1->SetIdleMode(CANSparkMax::IdleMode::kCoast);
+        tower2->SetIdleMode(CANSparkMax::IdleMode::kCoast);
+    }
 }

@@ -10,10 +10,10 @@ ShooterPlain::ShooterPlain() : frc::Subsystem("ShooterPlain")
     shooter2 = new CANSparkMax(SHOOTER_2, CANSparkMaxLowLevel::MotorType::kBrushless);
     shooter1->SetIdleMode(CANSparkMax::IdleMode::kCoast);
     shooter2->SetIdleMode(CANSparkMax::IdleMode::kCoast);
-    shooter1->SetOpenLoopRampRate(7);
-    shooter2->SetOpenLoopRampRate(7);
-    shooter1->SetClosedLoopRampRate(3);
-    shooter2->SetClosedLoopRampRate(3);
+    shooter1->SetOpenLoopRampRate(1);
+    shooter2->SetOpenLoopRampRate(1);
+    shooter1->SetClosedLoopRampRate(1);
+    shooter2->SetClosedLoopRampRate(1);
     shooter2->Follow(*shooter1, true);
 
 
@@ -52,5 +52,10 @@ void ShooterPlain::setRpm(double rpm)
 
     m_pidController.SetReference(-rpm, rev::ControlType::kVelocity);
 
-    std::cout << "Speed: " << shooter1->GetEncoder().GetVelocity() << std::endl;
+    // std::cout << "Speed: " << shooter1->GetEncoder().GetVelocity() << std::endl;
+}
+
+double ShooterPlain::GetVelocity()
+{
+    return shooter1->GetEncoder().GetVelocity();
 }

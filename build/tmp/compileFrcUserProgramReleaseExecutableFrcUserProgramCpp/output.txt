@@ -1,4 +1,6 @@
 See file:///D:/Wave2826/InfiniteRecharge/InfiniteRecharge/build/tmp/compileFrcUserProgramReleaseExecutableFrcUserProgramCpp/output.txt for all output for compileFrcUserProgramReleaseExecutableFrcUserProgramCpp.
-compiling Turret.cpp successful.
+compiling IntakeCommand.cpp successful.
+
+compiling Robot.cpp successful.
 
 Finished compileFrcUserProgramReleaseExecutableFrcUserProgramCpp, see full log file:///D:/Wave2826/InfiniteRecharge/InfiniteRecharge/build/tmp/compileFrcUserProgramReleaseExecutableFrcUserProgramCpp/output.txt.
