@@ -2,23 +2,19 @@
 #include "Reference.h"
 
 using namespace rev;
-
+//static double s_lastSetSpeed = 0;
 ShooterPID::ShooterPID() : PIDSubsystem(frc2::PIDController( 1.0, 0.0, 0.0)),
     pidController(GetController())
 {
     pidController.DisableContinuousInput();
-    pidController.SetTolerance(0.2);
+    pidController.SetTolerance(5);
     
-    shooter1 = new WPI_TalonFX(SHOOTER_1);
-    shooter2 = new WPI_TalonFX(SHOOTER_2);
-    shooter1->SetNeutralMode(phoenix::motorcontrol::Coast);
-    shooter2->SetNeutralMode(phoenix::motorcontrol::Coast);
+    shooter1 = new CANSparkMax(SHOOTER_1, CANSparkMaxLowLevel::MotorType::kBrushless);
+    shooter2 = new CANSparkMax(SHOOTER_2, CANSparkMaxLowLevel::MotorType::kBrushless);
+    shooter1->SetIdleMode(CANSparkMax::IdleMode::kCoast);
+    shooter2->SetIdleMode(CANSparkMax::IdleMode::kCoast);
+    shooter2->SetInverted(true);
     shooterGroup = new frc::SpeedControllerGroup(*shooter1, *shooter2);
-    tower1 = new CANSparkMax(TOWER_1, CANSparkMaxLowLevel::MotorType::kBrushless);
-    tower2 = new CANSparkMax(TOWER_2, CANSparkMaxLowLevel::MotorType::kBrushless);
-    tower1->SetIdleMode(CANSparkMax::IdleMode::kBrake);
-    tower2->SetIdleMode(CANSparkMax::IdleMode::kBrake);
-    towerGroup = new frc::SpeedControllerGroup(*tower1, *tower2);
     
     m_defaultSpeed = 0;
 
@@ -29,8 +25,10 @@ double ShooterPID::GetMeasurement() {
     // e.g. a sensor, like a potentiometer:
     // yourPot->SetAverageVoltage() / kYourMaxVoltage;
     
-    //Need to get raw speed. Will probably have to reference the CTRE software
-    return shooter1->GetSensorCollection().GetIntegratedSensorVelocity();  
+    // Need to get raw speed. Will probably have to reference the CTRE software
+    // return shooter1->GetSensorCollection().GetIntegratedSensorVelocity();  
+    
+    return shooter1->GetEncoder().GetVelocity();
 }
 
 void ShooterPID::UseOutput(double output, double setpoint) {
@@ -38,34 +36,63 @@ void ShooterPID::UseOutput(double output, double setpoint) {
     // e.g. yourMotor->Set(output);
 
     // In this function, floor the "output" value to zero before passing it to the motor group.
-    if (output < 0)
-    {
-        output = 0;
-    }
-    shooterGroup->PIDWrite(output);
+
+//shooterGroup->PIDWrite(output);
 }
 
-// Sets the shooter speed
-void ShooterPID::SetShooterSpeed(double rpm)
+// Prints the current draw of the two motors
+void ShooterPID::PrintCurrent()
 {
-    static double s_lastSetSpeed = 0;
+    std::cout << "Shooter Currents: " << shooter1->Get() << " & " << shooter2->GetOutputCurrent() << std::endl;
+}
+
+// Sets the motor speed
+void ShooterPID::SetShooterSpeed(double speed)
+{
+    Disable();
+    shooter1->Set(speed);
+    shooter2->Set(-speed);
+    
+    // SetSetpoint(speed);
+    // Enable();
+}
+
+
+
+
+// Chris sucks, this is the old code below
+
+/*
+// Sets the shooter speed
+//static double s_lastSetSpeed = 0;
+void ShooterPID::SetShooterSpeed(double speed)
+{
+        // what is the purpose of the comparison if the last set speed is always zero?
+        static double s_lastSetSpeed = 0;
+        
+		 std::cout << "Rpm" << rpm  << std::endl;
+         
+		 std::cout << "last Set speed" << s_lastSetSpeed << std::endl;
+        
     if(rpm != s_lastSetSpeed)
     {
-        if(rpm > 0)
+         std::cout << "BI sucks" << std::endl;
+        if (rpm > 0)
         {
             SetSetpoint(rpm);
             Enable();
+            
+            std::cout << "Enable" << std:: endl;
+            std::cout << rpm << std:: endl;
         }
         else
         {
+            std::cout << "Disable" << std:: endl;
             Disable();
         }
     }
     s_lastSetSpeed = rpm;    
-}
+    
 
-void ShooterPID::SetTowerSpeed(double speed)
-{
-    towerGroup->Set(speed);
 }
-
+*/

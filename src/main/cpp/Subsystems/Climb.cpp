@@ -2,10 +2,10 @@
 #include "Reference.h"
 
 using namespace rev;
-
+const double motorlimit = 0;
 Climb::Climb() {
     climbMotor = new CANSparkMax(CLIMB, CANSparkMaxLowLevel::MotorType::kBrushless);
-    ratchetServo = new frc::Servo(0);
+    ratchetServo = new frc::Servo(RATCHET_SERVO);
 }
 
 // Reads servo position
@@ -33,8 +33,38 @@ void Climb::ToggleServoLock(bool lock)
 	}
 }
 
+double Climb::GetClimbRotationCount()
+{
+    double rawPosition = climbMotor->GetEncoder().GetPosition();
+
+    return rawPosition; 
+}
+
+bool Climb::ClimbLimitReached()
+{
+    if(GetClimbRotationCount() <= motorlimit)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+    
+}
+
 // Sets climb speed
 void Climb::SetClimbSpeed(double speed)
 {
     climbMotor->Set(speed);
+}
+
+void Climb::setBrake(bool brake){
+
+    if (brake) {
+        climbMotor->SetIdleMode(CANSparkMax::IdleMode::kBrake);
+    }
+    else {
+        climbMotor->SetIdleMode(CANSparkMax::IdleMode::kCoast);
+    }
 }

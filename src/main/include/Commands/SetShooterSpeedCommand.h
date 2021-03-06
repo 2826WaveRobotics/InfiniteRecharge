@@ -31,11 +31,15 @@ class SetShooterSpeedCommand
  public:
   SetShooterSpeedCommand(double rpm);
 
+   void Execute() override;
+
   //If this function is not included in the class, it will do nothing
   void Initialize() override;
 
   //If this function is not included in the class, it will return FALSE and run forever
   bool IsFinished() override;
+
+  void End(bool interrupted) override;
 
 };
 

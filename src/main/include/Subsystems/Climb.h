@@ -19,4 +19,7 @@ public:
     void SetServoPosition(double position);
     void ToggleServoLock(bool lock);
     void SetClimbSpeed(double speed);
+    double GetClimbRotationCount();
+    bool ClimbLimitReached();
+    void setBrake(bool brake);
 };

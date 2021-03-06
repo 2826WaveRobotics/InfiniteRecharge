@@ -11,10 +11,10 @@
 
 #ifdef PRACTICE_BOT
 
-#define TURRET          0   // Brake
-#define SHOOTER_1       3   // Coast
-#define SHOOTER_2       2   // Coast
-#define DRIVE_LEFT_1    4
+#define TURRET          52   // Brake
+#define SHOOTER_1       44  //5    // Coast
+#define SHOOTER_2       49  // 62   // Coast
+#define DRIVE_LEFT_1    4  
 #define DRIVE_LEFT_2    57
 #define DRIVE_LEFT_3    55
 #define DRIVE_RIGHT_1   54
@@ -25,8 +25,8 @@
 #define TOWER_2         61   // Brake
 #define HOPPER_LEFT     58   // Brake
 #define HOPPER_RIGHT    60   // Brake
-#define INTAKE          44   // Brake
-#define CLIMB           1   // Brake
+#define INTAKE          43 //48 //43   // Brake
+#define CLIMB           1    // Brake
 
 #endif // End of PRACTICE_BOT
 
@@ -60,5 +60,8 @@
 // to both robots. 
 
 #define GYRO            1
+#define RATCHET_SERVO   9
+#define LOWER_SENSOR    0
+#define UPPER_SENSOR    1
 
 #endif
