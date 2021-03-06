@@ -4,6 +4,9 @@ D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\d
 D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\2vltm5b38ci38wgw35x5iw6lr\\Climb.o
 D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\2y0j7bakndhfiijoln8ggh3yt\\OI.o
 D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\3bg5a77l7vd4edmrxq5jco6ri\\Robot.o
+D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\3qp3e4ol5jo7zgv71ku0tm6sg\\FireBalls.o
+D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\4trchpfvy9l5j15meflbz6440\\RaiseTower.o
+D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\6zfocykqmeizg6i4deawydozm\\SetShooterSpeedCommand.o
 D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\8l31rwiuh7akj0nhhlkq2g6as\\ShooterPID.o
 D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\9yn3225kcwzxnrwa0ktavgkf5\\DrivePID.o
 D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\c6l3cx5xikfkgkym8e3psqfve\\Feeder.o
@@ -11,6 +14,7 @@ D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\d
 D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\dvjz9l0td6e2bsyb7rwawuao4\\zCommandSequence.o
 D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\egqgrx03wsz3ti3dmdz935p3d\\LimeLight.o
 D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\et1hskoyshgy4rfl78v9rx2eb\\Turret.o
+D:\\Wave2826\\InfiniteRecharge\\InfiniteRecharge\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\sif2cb4llfusspmn4ms49g3x\\SetTargetTracking.o
 "C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\e6b7a50bb2e7bbef428f312d2fbae2ff\\wpilibc-cpp-2020.2.2-linuxathenadebug\\linux\\athena\\shared\\libwpilibcd.so"
 "C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\77a85e774db7b6c44840e8f3466656d2\\ntcore-cpp-2020.2.2-linuxathenadebug\\linux\\athena\\shared\\libntcored.so"
 "C:\\Users\\Wave Admin\\.gradle\\caches\\transforms-2\\files-2.1\\bcd3b5e3d1b1ee0da931a5bda82b4294\\hal-cpp-2020.2.2-linuxathenadebug\\linux\\athena\\shared\\libwpiHald.so"

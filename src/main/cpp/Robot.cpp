@@ -68,11 +68,22 @@ void Robot::TeleopPeriodic() {
 
 	////   Drive    /////////////////////////////////////////////////////
 	
-	drivePID.get()->ArcadeDrive(oi->getDriver()->GetY(LEFT), oi->getDriver()->GetX(RIGHT));
+	double rightSide = oi->getDriver()->GetY(RIGHT);
+	double leftSide = oi->getDriver()->GetX(LEFT);
+	rightSide=rightSide*-1;
+	drivePID.get()->ArcadeDrive(rightSide*.5, leftSide*.5);
 
 
 	////   Feeder & Hopper   ////////////////////////////////////////////
-
+	if(oi->getDriver()->GetAButton())
+	{
+		feeder.get()->SetHopperSpeed(0.5);
+	}
+	else
+	{
+		feeder.get()->SetHopperSpeed(0.0);
+	}
+	
 
 
 	////    Tower & Shooter   ///////////////////////////////////////////
@@ -84,7 +95,7 @@ void Robot::TeleopPeriodic() {
 
 
 	////   Color Wheel     ///////////////////////////////////////////////
-	colorWheel.get()->printClosestColor();
+	//colorWheel.get()->printClosestColor();
 
 
 	////  CLimb & Servo    //////////////////////////////////////////////////////////////
@@ -97,7 +108,7 @@ void Robot::TeleopPeriodic() {
 		p_servoPosition = 0.325;
 	}
 	climb.get()->SetServoPosition(p_servoPosition);
-	std::cout << "Servo Position: " << p_servoPosition << std::endl;
+	//std::cout << "Servo Position: " << p_servoPosition << std::endl;
 
 }//TeleopPeriodic
 
